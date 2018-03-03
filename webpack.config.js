@@ -1,11 +1,12 @@
-const webpack = require('webpack');
 const {resolve} = require('path');
+const webpack = require('webpack');
 
 const SRC_DIR = resolve(__dirname, './src');
+const PUBLIC_DIR = resolve(__dirname, './public');
 const DIST_DIR = resolve(__dirname, './public/dist');
 
 module.exports = {
-	// "Закрепим каталог в котором находятся исходники"
+	// "Закрепим" каталог в котором находятся исходники
 	context: SRC_DIR,
 
 	// Входная точка
@@ -16,7 +17,7 @@ module.exports = {
 	// Конечные бандлы
 	output: {
 		path: DIST_DIR,
-		filename: '[name].js'
+		filename: '[name].js?v=[hash]'
 	},
 
 	// Игнорируем react -> используем CDN
@@ -25,14 +26,15 @@ module.exports = {
 		'react-dom': 'ReactDOM'
 	},
 
-	// Настройки режима пересборки при изменениях
-	watch: true,
-	watchOptions: {
-		aggregateTimeout: 500
-	},
-
 	// Подключим сорсмапы
 	devtool: 'source-map',
+
+	// Дев сервер для раздачи статики и live reload + hmr
+	devServer: {
+		contentBase: PUBLIC_DIR,
+		host: '127.0.0.1',
+		port: 8080
+	},
 
 	// Описываем лоадеры
 	module: {
@@ -40,14 +42,7 @@ module.exports = {
 			{
 				test: /\.js$/,
 				include: SRC_DIR,
-				use: [
-					{
-						loader: 'babel-loader',
-						options: {
-							presets: ['es2015', 'react']
-						}
-					}
-				]
+				use: 'babel-loader'
 			},
 			{
 				test: /\.styl$/,

@@ -9,4 +9,9 @@ const Wrapper = () => {
 	);
 };
 
-ReactDOM.render(<Wrapper />, document.getElementById('app'));
+render();
+module.hot && module.hot.accept(() => render());
+
+function render() {
+	ReactDOM.render(<Wrapper />, document.getElementById('app'));
+}
