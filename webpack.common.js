@@ -1,13 +1,13 @@
-const {resolve} = require('path');
 const webpack = require('webpack');
 
-const SRC_DIR = resolve(__dirname, './src');
-const PUBLIC_DIR = resolve(__dirname, './public');
-const DIST_DIR = resolve(__dirname, './public/dist');
+const {
+	distDir,
+	srcDir
+} = require('./webpack.utils');
 
 module.exports = {
 	// "Закрепим" каталог в котором находятся исходники
-	context: SRC_DIR,
+	context: srcDir,
 
 	// Входная точка
 	entry: {
@@ -16,7 +16,7 @@ module.exports = {
 
 	// Конечные бандлы
 	output: {
-		path: DIST_DIR,
+		path: distDir,
 		filename: '[name].js?v=[hash]'
 	},
 
@@ -26,32 +26,13 @@ module.exports = {
 		'react-dom': 'ReactDOM'
 	},
 
-	// Подключим сорсмапы
-	devtool: 'source-map',
-
-	// Дев сервер для раздачи статики и live reload + hmr
-	devServer: {
-		contentBase: PUBLIC_DIR,
-		host: '127.0.0.1',
-		port: 8080
-	},
-
 	// Описываем лоадеры
 	module: {
 		rules: [
 			{
 				test: /\.js$/,
-				include: SRC_DIR,
+				include: srcDir,
 				use: 'babel-loader'
-			},
-			{
-				test: /\.styl$/,
-				include: SRC_DIR,
-				use: [
-					'style-loader',
-					'css-loader',
-					'stylus-loader'
-				]
 			},
 			{
 				test: /\.svg$/,
