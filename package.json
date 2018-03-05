@@ -6,7 +6,7 @@
   "scripts": {
     "clear:dist": "rm -rf ./public/dist",
     "build:dev": "npm run clear:dist && NODE_ENV=development webpack --config webpack.config.js",
-    "start": "npm run build:dev && webpack-dev-server --progress --color --hot"
+    "start": "npm run clear:dist && webpack-dev-server --progress --color --hot"
   },
   "author": "",
   "license": "ISC",
