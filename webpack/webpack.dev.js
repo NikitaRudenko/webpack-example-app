@@ -2,6 +2,7 @@ const merge = require('webpack-merge');
 
 const {
 	publicDir,
+	distDir,
 	srcDir
 } = require('./webpack.utils');
 const common = require('./webpack.common.js');
@@ -12,7 +13,7 @@ module.exports = merge(common, {
 
 	// Дев сервер для раздачи статики и live reload + hmr
 	devServer: {
-		contentBase: publicDir,
+		publicPath: '/',
 		host: '127.0.0.1',
 		port: 8080
 	},

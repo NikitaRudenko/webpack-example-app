@@ -1,4 +1,6 @@
+const {resolve} = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const {
 	distDir,
@@ -44,6 +46,9 @@ module.exports = {
 	// Подключаем плагины
 	plugins: [
 		new webpack.NoEmitOnErrorsPlugin(),
+		new HtmlWebpackPlugin({
+			template: resolve(__dirname + '/../public/index.tmpl.html')
+		}),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'common',
 			minChunks: 2
